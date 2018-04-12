@@ -30,7 +30,14 @@ app.use(bodyParser.urlencoded({
 app.use(express.static("public"));
 
 // Connect to the Mongo DB
-mongoose.connect("mongodb://localhost/dive_db");
+// var databaseUri = mongoose.connect("mongodb://localhost/dive_db");
+var databaseUri = "mongodb://localhost/dive_db";
+
+if(process.env.MONGOLAB_URI) {
+  mongoose.connect(process.env.MONGOLAB_URI);
+}else {
+  mongoose.connect(databaseUri);
+}
 
 // Routes
 
